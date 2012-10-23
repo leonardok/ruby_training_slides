@@ -1,0 +1,41 @@
+
+Employer
+  when it is first created
+    should have default name and website (PENDING: Not yet implemented)
+    should have no employees (PENDING: Not yet implemented)
+    should be possible to rename (PENDING: Not yet implemented)
+    should be possible to return the name and website as string (PENDING: Not yet implemented)
+    should return an empty hash (PENDING: Not yet implemented)
+    should be possible to add a new employee (PENDING: Not yet implemented)
+  with employees
+    should return hash with all employees in an array (PENDING: Not yet implemented)
+    should be possible to remove an existing employee (PENDING: Not yet implemented)
+
+Pending:
+  Employer when it is first created should have default name and website
+    # Not yet implemented
+    # ./code_samples/rspec_tests.rb:7
+  Employer when it is first created should have no employees
+    # Not yet implemented
+    # ./code_samples/rspec_tests.rb:8
+  Employer when it is first created should be possible to rename
+    # Not yet implemented
+    # ./code_samples/rspec_tests.rb:9
+  Employer when it is first created should be possible to return the name and website as string
+    # Not yet implemented
+    # ./code_samples/rspec_tests.rb:10
+  Employer when it is first created should return an empty hash
+    # Not yet implemented
+    # ./code_samples/rspec_tests.rb:11
+  Employer when it is first created should be possible to add a new employee
+    # Not yet implemented
+    # ./code_samples/rspec_tests.rb:12
+  Employer with employees should return hash with all employees in an array
+    # Not yet implemented
+    # ./code_samples/rspec_tests.rb:16
+  Employer with employees should be possible to remove an existing employee
+    # Not yet implemented
+    # ./code_samples/rspec_tests.rb:17
+
+Finished in 0.00135 seconds
+8 examples, 0 failures, 8 pending

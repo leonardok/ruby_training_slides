@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<!--
+	Google HTML5 slide template
+
+	Authors: Luke Mahé (code)
+					 Marcin Wichary (code and design)
+
+					 Dominic Mazzoni (browser compatibility)
+					 Charles Chen (ChromeVox support)
+
+	URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+	<head>
+		<title>Presentation</title>
+
+		<meta charset='utf-8'>
+		<script
+			src='js/slides.js'></script>
+	</head>
+	
+	<style>
+		/* Your individual styles here, or just use inline styles if that’s
+			 what you want. */
+		
+		
+	</style>
+
+	<body style='display: none'>
+
+		<section class='slides layout-regular template-default'>
+			
+			<!-- Your slides (<article>s) go here. Delete or comment out the
+					 slides below. -->
+				
+				
+
+			<article>
+				<h1>
+					RSpec <br>
+					and why to Automate Testing
+				</h1>
+				<p>
+					Leonardo Richter Korndörfer
+					<br>
+					September 10, 2012
+				</p>
+			</article>
+			
+
+
+
+			<article>
+				<h3>
+					Why to Automate: <span  class="green">Reasons to</span>
+				</h3>
+				<br>
+				<ul>
+					<li> Saves Time (and Money)
+					<li> Improves Accuracy
+					<li> Increases Test Coverage
+					<li> Does What Manual Testing Cannot
+					<li> Helps Developers and Testers
+					<li> Improves Team Morale
+				</ul>
+				<br>
+				<span style="font-size: 15px">Font: <a href="http://support.smartbear.com/articles/testcomplete/manager-overview/">smartbear.com</a></span>
+			</article>
+
+
+
+
+
+			<article>
+				<h3>
+					Why to Automate
+				</h3>
+				<br>
+				<p> <img src="img/where_errors_are_introduced.png" class="centered" style="width:600px"> </p>
+			</article>
+
+
+
+
+
+			<article class="smaller">
+				<h3> RSpec Intro </h3>
+				<p>
+				RSpec is testing tool for the Ruby programming language. Born under the banner of Behaviour-Driven Development.
+				</p>
+
+				<ul>
+					<li> Designed to make Test-Driven Development productive and enjoyable experience
+					<li> A rich command line program (the rspec command)
+					<li> Textual descriptions of examples and groups (rspec-core)
+					<li> Flexible and customizable reporting
+					<li> Extensible expectation language (rspec-expectations)
+					<li> Built-in mocking/stubbing framework (rspec-mocks)
+				</ul>
+
+				<br>
+				<p>Documentation</p>
+				<ul>
+					<li> <a href="http://rubydoc.info/gems/rspec-core">http://rubydoc.info/gems/rspec-core</a>
+					<li> <a href="http://rubydoc.info/gems/rspec-expectations">http://rubydoc.info/gems/rspec-expectations</a>
+					<li> <a href="http://rubydoc.info/gems/rspec-mocks">http://rubydoc.info/gems/rspec-mocks</a>
+					<li> <a href="http://rubydoc.info/gems/rspec-rails">http://rubydoc.info/gems/rspec-rails</a>
+				</ul>
+			</article>
+
+
+
+
+
+			<article>
+				<h3> RSpec Setup </h3>
+				<ul>
+					<li> <code>$ gem install rspec</code><br><br>
+					<li> <b class="red">When in a rails project:</b><br>Add the RSpec gem to your Gemfile, adding to the end of the file <br><code>gem 'rspec'</code> 
+					<br> Run <code>bundle install</code> in your project
+				</ul>
+				<br>
+				<p> When your bundle finish executing your application will be ready to be tested with RSpec. </p>
+			</article>
+
+
+
+
+			<article class="smaller">
+				<h3> Test Structure </h3>
+				<p>
+				RSpec tests are written describing your application behavior. While writing RSpec tests you should
+				expect to see the words "describe" and "it" as keywords, in order to express concepts just like in
+				a conversation. The basic structure should look like:
+				</p>
+				<code><pre>
+describe Order do
+  it "sums the prices of its line items" do
+    order = Order.new
+    order.add_entry(LineItem.new(:item =&gt; Item.new(
+      :price =&gt; Money.new(1.11, :USD)
+    )))
+    order.add_entry(LineItem.new(:item =&gt; Item.new(
+      :price =&gt; Money.new(2.22, :USD),
+      :quantity =&gt; 2
+    )))
+    order.total.should eq(Money.new(5.55, :USD))
+  end
+end </pre></code>
+				<p> When executing you should see: </p>
+				<code><pre>"Describe an order."
+"It sums the prices of its line items."
+				</pre></code>
+			</article>
+
+
+
+
+
+
+
+			<article>
+				<h3> Test Structure </h3>
+				<p>
+				You can also declare nested groups using "context" and "describe"
+				</p>
+				<code><pre>
+describe Order do
+  context "with no items" do
+    it "behaves one way" do
+      # ...
+    end
+  end
+
+  context "with one item" do
+    it "behaves another way" do
+      # ...
+    end
+  end
+end
+				</pre></code>
+			</article>
+
+
+
+
+
+			<article>
+				<h3> Test Structure </h3>
+				<p>
+				Some other points:
+				</p>
+				<ul>
+					<li> You can declare example groups using either describe or context, though only <code>describe</code> is available at the top level
+					<li> Declare examples with <code>it</code>, <code>specify</code>, or <code>example</code>
+					<li> The blocks passed to <code>it</code> are evaluated in the context of an instance of that class.
+				</ul>
+			</article>
+
+
+
+
+
+			<article>
+				<h3> Shared Examples and Contexts </h3>
+				<code><pre>
+shared_examples "collections" do |collection_class|
+  it "is empty when first created" do
+    collection_class.new.should be_empty
+  end
+end
+
+describe Array do
+  include_examples "collections", Array
+end
+
+describe Hash do
+  include_examples "collections", Hash
+end
+				</pre></code>
+			</article>
+
+
+
+
+
+
+
+			<article class="smaller">
+				<h3> Running your Tests </h3>
+				<code><pre>
+# in spec/calculator_spec.rb
+require "calculator"
+
+describe Calculator do
+  it "add(x,y) returns the sum of its arguments" do
+    Calculator.new.add(1, 2).should eq(3)
+  end
+end
+
+# in lib/calculator.rb
+class Calculator
+  def add(a,b)
+    a + b
+  end
+end
+
+$ rspec spec/calculator_spec.rb
+.
+
+Finished in 0.000315 seconds
+1 example, 0 failures
+				</pre></code>
+			</article>
+
+
+
+			<article class="build">
+				<img src="img/really_all_that_easy.jpg" class="centered" >
+				<h2> Adding Tests to Your Application </h2>
+			</article>
+
+
+
+
+
+
+
+
+
+			<article>
+				<h3> Describe your Test</h3>
+				<code><pre>
+class Employer end
+
+describe Employer do
+  context "when it is first created"
+    it "should have default name and website"
+    it "should have no employees"
+    it "should be possible to rename"
+    it "should be possible to return the name and website as string"
+    it "should return an empty hash"
+    it "should be possible to add a new employee"
+  end
+
+  context "with employees"
+    it "should return hash with all employees in an array"
+    it "should be possible to remove an existing employee"
+  end
+end
+				</pre></code>
+			</article>
+
+
+
+
+			<article class="smaller">
+				<h3> Testing </h3>
+				<ul>
+					<li> What happens when we try to run <br><code>$ rspec code_samples/rspec_tests.rb</code>
+				</ul>
+				<ul class="build">
+					<li> All tests will apper as not implemented
+				</ul>
+
+				<code class="build"><pre>
+Employer
+  when it is first created
+    should have default name and website (PENDING: Not yet implemented)
+    should have no employees (PENDING: Not yet implemented)
+    should be possible to rename (PENDING: Not yet implemented)
+    should return the name and website as string (PENDING: Not yet implemented)
+    should return an empty hash (PENDING: Not yet implemented)
+    should be possible to add a new employee (PENDING: Not yet implemented)
+  with employees
+    should return hash with all employees in an array (PENDING: Not yet implemented)
+    should be possible to remove an existing employee (PENDING: Not yet implemented)
+
+				</pre></code>
+			</article>
+
+
+
+
+			<article>
+				<h3> About this Approach</h3>
+				<p> Is this good? </p>
+				<ul class="build">
+					<li> It is good for developers
+					<li> Good for testers
+					<li> And for managers too...
+					<li> It is test driven
+					<li> You know what you are messing with
+					<li> If doesn't break, you are probably doing it right
+				</ul>
+
+				<br>
+				<span class="build" style="font-size: 1.3em"><p class="red"> = confidence! </p></span>
+				<span class="build" style="font-size: 1.3em"><p class="green"> = fail fast and fix even faster! </p></span>
+			</article>
+
+
+
+
+
+			<article>
+				<h3> Test Development </h3>
+				<p> Until now we have talked about structure.<br> Now it is time to build those tests! </p><br>
+				<ul class="build">
+					<li>It all about expectations. You want stuff to be done.</p>
+					<li>As testers, we know what the software must do.</p>
+					<li>As developers, we know what the software must do.</p>
+					<li>But does it do what it is supposed to?</p>
+				</ul>
+				<ul class="build">
+					<li> We call it "expectations". And that is how we test with RSpec. </p>
+				</ul>
+			</article>
+
+
+
+
+			<article class="smaller">
+				<h3> Expectations </h3>
+				<p> RSpec::Expectations lets you express expected outcomes on an object in an example. </p>
+				<code><pre> account.balance.should eq(Money.new(37.42, :USD)) </pre></code>
+
+
+				<p> Here's an example using rspec-core: </p>
+				<code><pre>describe Order do
+  it "sums the prices of the items in its line items" do
+    order = Order.new
+    order.add_entry(LineItem.new(:item => Item.new(
+      :price => Money.new(1.11, :USD)
+    )))
+    order.add_entry(LineItem.new(:item => Item.new(
+      :price => Money.new(2.22, :USD),
+      :quantity => 2
+    )))
+    expect(order.total).to eq(Money.new(5.55, :USD))
+  end
+end
+				</pre></code>
+			</article>
+
+
+
+
+
+			<article class="">
+				<h3> <code>expect</code> syntax </h3>
+				<p> <code>expect</code> is the new syntax that solves some issues with <code>shoud</code> and rails edge. </p>
+				<p> For full documentation you should check on <a href="http://rubydoc.info/gems/rspec-expectations/">rspec rubydocs</a>.
+
+				<p> You can configure the syntax your project will be using with: </p>
+				<code><pre>RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+    # or
+    c.syntax = :should
+    # or
+    c.syntax = [:should, :expect]
+  end
+end
+				</pre></code>
+			</article>
+
+
+
+
+			<article class="">
+				<h3> <code>expect</code> syntax </h3>
+				<code><pre>[1,2,3].should include(1)
+[1,2,3].should include(1, 2)
+[1,2,3].should start_with(1)
+[1,2,3].should start_with(1,2)
+[1,2,3].should end_with(3)
+[1,2,3].should end_with(2,3)
+{:a => 'b'}.should include(:a => 'b')
+"this string".should include("is str")
+"this string".should start_with("this")
+"this string".should end_with("ring")</pre></code>
+				
+				
+				<p class="red"> Prefered: </p>
+				<code><pre>
+expect(actual).to eq expected
+expect(actual).to be > 3
+expect([1, 2, 3]).to_not include 4 </pre></code>
+			</article>
+
+
+
+
+			<article class="fill">
+				<h3> Implementation Time! </h3>
+				<img src="img/success_kid.jpg" style="width: 700px; min-w">
+			</article>
+
+
+
+			<article>
+				<h2>Thank you!</h2>
+			</article>
+
+
+
+
+
+		</section>
+	</body>
+</html>
