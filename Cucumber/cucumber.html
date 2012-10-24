@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<!--
+	Google HTML5 slide template
+
+	Authors: Luke Mahé (code)
+					 Marcin Wichary (code and design)
+
+					 Dominic Mazzoni (browser compatibility)
+					 Charles Chen (ChromeVox support)
+
+	URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+	<head>
+		<title>Presentation</title>
+
+		<meta charset='utf-8'>
+		<script
+			src='js/slides.js'></script>
+	</head>
+	
+	<style>
+		/* Your individual styles here, or just use inline styles if that’s
+			 what you want. */
+		
+		
+	</style>
+
+	<body style='display: none'>
+
+		<section class='slides layout-regular template-default'>
+			
+			<!-- Your slides (<article>s) go here. Delete or comment out the
+					 slides below. -->
+				
+				
+
+			<article>
+				<h1>
+					Cucumber <br>
+					<div class="build"><span style="font-size: 0.7em; color: #225c2b">or "How I Learned to Stop Worrying and Love the Bomb"</span></div>
+				</h1>
+				<p>
+					Leonardo Richter Korndörfer
+					<br>
+					October 16, 2012
+				</p>
+			</article>
+			
+
+
+
+
+
+
+
+			<article>
+				<h3>
+					Why to Automate
+				</h3>
+				<br>
+				<p> <img src="img/where_errors_are_introduced.png" class="centered" style="width:600px"> </p>
+			</article>
+
+
+
+
+			<article>
+				<h3>
+					Cucumber Intro
+				</h3>
+				<p> Cucumber is a tool that executes <span class="red">plain-text</span> functional descriptions as automated tests. </p>
+				<ul class="build">
+					<li> Intent of the tool is to support BDD
+					<li> Typically written before anything else
+					<li> Verified by business analysts, domain experts, etc. non technical stakeholders
+					<li> Written outside-in, to make the stories pass
+				</ul>
+				<br>
+				<div class="build"> <p> Cucumber is written in ruby but supports other langages. </p> </div>
+			</article>
+
+
+
+
+			<article class="fill">
+				<iframe src='http://cukes.info/'></iframe>
+			</article>
+
+
+
+			<article>
+				<h3> Test Structure </h3>
+				<p>
+					Lets see how cucumber tests can be written:
+				</p>
+				<code><pre>
+# Explain what the feature is
+Feature: Search courses
+  In order to ensure better utilization of courses
+  Potential students should be able to search for courses
+
+  # Give scenarios
+  Scenario: Search by topic
+    Given there are 240 courses which do not have the topic "biology"
+    And there are 2 courses A001, B205 that each have "biology" as one of the topics
+    When I search for "biology"
+    Then I should see the following courses:
+      | Course code |
+      | A001        |
+      | B205        |
+				</pre></code>
+			</article>
+
+
+
+
+
+			<article>
+				<h3> Development With Cucumber Sequence </h3>
+				<ol class="build">
+					<li> Describe behaviour in plain text
+					<li> Write a step definition in Ruby
+					<li> Run and watch it fail
+					<li> Write code to make the step pass
+					<li> Run again and see the step pass
+					<li> Repeat 2-5 until green like a cuke
+				</ol>
+			</article>
+
+
+			<article>
+			<h2> Our Application: A Bar Manager <br><span style="font-size: 0.6em">An Informal Design</span> </h2>
+			</article>
+
+
+
+			<article>
+				<h3> Designing <span class="red">"Bar" </span> </h3>
+				<p style="font-size: 0.7em">So let's list what requisites we have</p>
+				<p>We could start with the <b>"Bar"</b> artifact:</p>
+				<ul class="build">
+					<li> The system should have no bars when created <span style="font-size: 0.8em">(validity of this test is questionable)</span>
+					<li> Should be possible to add bars
+					<li> User should be able to remove bars
+					<li> Edit an existing bar
+					<li> List all bars
+				</ul>
+			</article>
+
+
+
+			<article class="">
+				<h3> Building Our Scenarios</h3>
+				<code><pre>
+Feature: Bar
+  In order to keep track of all bars
+  The application should be able to manage bars
+
+  Scenario: Add a new bar
+    Given I am on the bars index
+    And I click in the "new" bar link
+    And I fill the bar form with name: "The bar", 
+                            bartender: "Leonardo" and 
+                          minumin age: 21
+    And I click on "Create Bar"
+    Then I should see a bar add confirmation message
+
+  Scenario: Removing a bar
+    Given I am on the bars index
+    And I click in the "destroy" link # anyone
+    And I confirm my action
+    Then I should a message that confirms I deleted a bar
+				</pre></code>
+
+				<p>
+
+			</article>
+
+
+
+			<article>
+				<h3> Testing Tips</h3>
+				<ul class="build">
+					<li> Don't complicate your tests. You don't have to check all existing 
+						conditions to check a behavior. Above all, we test for specific behaviors.
+					<li> When testing for a message, test the message only. When testing for user 
+						addition and the page show a confirmation message with a specific text, why
+						shouldn't you trust the user was added?
+					<li> Go the easy way.
+				</ul>
+				<br>
+				<p class="build"><span class="red">More is better</span></p>
+			</article>
+
+
+
+
+			<article>
+				<h3> Designing Drinkers </h3>
+				<ul class="build">
+					<li> The system should have no drinkers when created
+					<li> Should be possible to add drinkers
+					<li> User should be able to remove drinkers
+					<li> Edit an existing drinker
+					<li> List all drinkers
+					<li> <b> Drinkers can go to a bar </b> <span class="red">(this will be our relation)</span>
+					<li> <b> Drinkers should not enter in a bar if have less than bars minimum age </b>
+				</ul>
+			</article>
+
+
+
+
+			<article>
+				<h2>Cucumber Setup
+					<p style="font-size:0.6em"> Let's take a moment and deviate from stories to install cucumber in out environment </p>
+				</h2>
+			</article>
+
+
+
+
+
+
+
+			<article>
+				<h3> What You Get When You Install Cucumber </h3>
+				<ul>
+					<li> <code>rspec</code>
+					<li> <code>capybara</code>
+					<li> <code>webrat</code> (standalone only)
+					<li> <code>factory_girl</code> (rails only)
+					<li> <code>database_cleaner</code> (rails only)
+				</ul>
+
+				<br>
+				<div class="build">
+					<p> How do I know that? </p>
+					<code>$ gem dependency cucumber</code>
+				</div>
+			</article>
+
+
+
+			<article class="smaller">
+				<h3> Install Cucumber in your Application </h3>
+				<p>Add to your <code>Gemfile</code></p>
+				<code><pre>
+# Gemfile
+group :test do
+  gem 'cucumber-rails'
+  gem 'cucumber'
+  gem 'database_cleaner'
+end </pre></code>
+<code><pre>
+$ bundle install 
+$ rails generate cucumber:install --rspec --capybara</pre></code>
+				<img src="img/cucumber_install.jpg">
+			</article>
+
+
+
+
+
+			<article class="smaller">
+				<h3> Install Cucumber in your Application </h3>
+				<p>To prepare your test environment:</p>
+				<code><pre>$ rake db:test:prepare
+$ cucumber features/bar_management.feature
+</pre></code>
+				<img src="img/cucumber_exec.jpg">
+			</article>
+
+
+
+
+
+			<article class="smaller">
+				<h3> Testing with Cucumber </h3>
+				<p>Don't worry if it is all pending. Cucumber will give you lots of sugestions. Easy cake! (or cuke)</p>
+				<br>
+				<img src="img/cucumber_steps_sugestions.jpg">
+			</article>
+
+
+
+
+
+			<article class="smaller">
+				<h2> Explaining the Other Components 
+				<br>
+				<span style="font-size: 0.7em">Now is better than never</span></h2>
+
+			</article>
+
+
+
+
+
+			<article>
+				<h3> RSpec </h3>
+
+				<p> Your old friend will never leave you! :-) </p>
+				<br><br>
+				<img src="img/yoda_advice.jpg" class="centered">
+			</article>
+
+
+
+
+
+
+
+
+			<article>
+				<h3> Capybara </h3>
+
+				<p> Write expressive and robust acceptance tests for a Ruby web application. </p>
+
+<code><pre>
+When /I sign in/ do
+  within("#session") do
+    fill_in 'Login', :with => 'user@example.com'
+    fill_in 'Password', :with => 'password'
+  end
+  click_link 'Sign in'
+end
+</pre></code>
+				<a href="http://rubydoc.info/github/jnicklas/capybara/master">http://rubydoc.info/github/jnicklas/capybara/master</a>
+			</article>
+
+
+
+
+
+			<article class="smaller">
+				<h3> Clicking links and buttons </h3>
+
+<code><pre>
+click_link('id-of-link')
+click_link('Link Text')
+click_button('Save')
+click_on('Link Text') # clicks on either links or buttons
+click_on('Button Value')
+</pre></code>
+				<h3> Interacting with forms </h3>
+
+<code><pre>
+fill_in('First Name', :with => 'John')
+fill_in('Password', :with => 'Seekrit')
+fill_in('Description', :with => 'Really Long Text...')
+choose('A Radio Button')
+check('A Checkbox')
+uncheck('A Checkbox')
+attach_file('Image', '/path/to/image.jpg')
+select('Option', :from => 'Select Box')
+</pre></code>
+				<p> Show other from:
+				<a href="http://rubydoc.info/github/jnicklas/capybara/master">http://rubydoc.info/github/jnicklas/capybara/master</a>
+				</p>
+
+			</article>
+
+
+
+
+
+			<article>
+				<h3> Factory Girl <span class="red" style="font-size: 0.8em">(when using with rails apps)</span></h3>
+				<p>Factory_girl is a fixtures replacement.</p>
+				<p>Build objects with pre-setted attributes.</p>
+				<span class="build"><h1 class="red"> Please do not use that!! </h1></span>
+			</article>
+
+
+
+
+
+
+
+
+
+
+
+
+			<article class="build">
+				<img src="img/really_all_that_easy.jpg" class="centered" >
+				<h2> Adding Tests to Your Application </h2>
+			</article>
+
+
+
+
+
+
+
+
+
+			<article class="fill">
+				<h3> Implementation Time! </h3>
+				<img src="img/success_kid.jpg" style="width: 700px; min-w">
+			</article>
+
+
+
+			<article>
+				<h2>Thank you!</h2>
+			</article>
+
+
+
+
+			<article class="">
+				<h2> Advanced Topics <br>
+				<a style="font-size: 0.5em" href="http://www.engineyard.com/blog/2009/cucumber-more-advanced/">A good source for</a>
+				</h2>
+			</article>
+
+
+
+
+			<article class="">
+				<h3> Example Tables </h3>
+				<p>Scenario outlines allow us to more concisely express these examples through the use of a template with placeholders, using Scenario Outline, Examples with tables and < > delimited parameters:</p>
+<code><pre>
+Scenario Outline: eating
+  Given there are <start> cucumbers
+  When I eat <eat> cucumbers
+  Then I should have <left> cucumbers
+
+  Examples:
+    | start | eat | left |
+    |  12   |  5  |  7   |
+    |  20   |  5  |  15  |
+</pre></code>
+			</article>
+
+
+
+
+			<article class="">
+				<h3> Tags </h3>
+				<p>In the simplest case, Cucumber runs all the scenarios in all the features that you point it at. By using tags you can be more specific about what is run.</p>
+<code><pre>
+@billing @annoy
+Feature: Verify billing
+  @important
+  Scenario: Missing product description
+  Scenario: Several products
+
+cucumber --tags @billing            # Runs both scenarios
+cucumber --tags @important          # Runs the first scenario
+
+cucumber --tags ~@important         # Runs the second scenario 
+                                    # (Scenarios without @important)
+</pre></code>
+			</article>
+
+
+
+
+
+
+
+
+			<article class="">
+				<h3> Hooks </h3>
+				<p>Let you run code before and after to modify the behavior of features.</p>
+				<p>Often defined in your env.rb file.</p>
+				<ul>
+					<li> Global Hooks
+					<li> Scenario Hooks
+					<li> Step Hooks
+					<li> Tagged Hooks
+				</ul>
+			</article>
+
+
+			<article class="smaller">
+				<h3> Background </h3>
+				<p>A Background is very much like a scenario in that it consists of a series of steps.</p>
+				<p>The difference is that its steps are executed before the steps of each scenario in the feature.</p>
+				<p>Background is run after any Before hooks.</p>
+<br>
+<code><pre>
+Feature: User Login
+  Background:
+    Given account 'A123' for 'Dave' with password '123'
+    And account 'B456' for 'Joe' with password 'abc'
+  Scenario: Dave logs in and sees his account
+    When I log in as 'Dave' using password '123'
+    Then I am in account 'A123'
+  Scenario: Jow logs in and sees his account
+    When I log in as 'Joe' using password 'abc'
+    Then I am in account 'B456'
+</pre></code>
+			</article>
+
+
+		</section>
+	</body>
+</html>
