@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<!--
+	Google HTML5 slide template
+
+	Authors: Luke Mahé (code)
+	         Marcin Wichary (code and design)
+	         Dominic Mazzoni (browser compatibility)
+	         Charles Chen (ChromeVox support)
+
+	Modified by: Leonardo Korndorfer (leokorndorfer@gmail.com)
+
+	URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+	<head>
+		<title>Ruby Crash Course</title>
+
+		<meta charset='utf-8'>
+		<script src='./js/slides.js'></script>
+	</head>
+	
+	<style>
+		/* Your individual styles here, or just use inline styles if that’s
+			 what you want. */
+		
+		
+	</style>
+
+	<body style='display: none'>
+
+		<section class='slides layout-regular template-default'>
+			<!-- Your slides (<article>s) go here. Delete or comment out the
+					 slides below. -->
+
+
+			<article>
+				<h1>
+					Ruby Crash Course
+					<br>
+					A really fast topic oriented Ruby overview 
+				</h1>
+				<p>
+					Leonardo Richter Korndörfer
+					<br>
+					October 8, 2012
+				</p>
+			</article>
+			
+			<article>
+				<h3> Initial stuffs </h3>
+				<ul class="build">
+					<li> Self Introduction </li>
+					<li> Peeps Introduction </li>
+					<li> Expectations </li>
+				</ul>
+				
+			</article>
+
+			<article>
+				<h3> Ruby? </h3>
+				<p>
+					Ruby is a <i>true*</i> Object-Oriented programming language.
+				</p>
+				<ul class="build">
+					<li> Everything is an <b>object</b>! </li>
+					<li> Really, everything! </li>
+					<li> Even numbers. You know... </li>
+				</ul>
+				<p class="build"><img style='height: 300px; float: right' src='images/Objects01.jpg'></p>
+				
+			</article>
+
+			<article>
+				<p class="build"><img class="centered" style='height: 500px;' src='images/Objects02.jpg'></p>
+				<br>
+				<div class="build"><p class="smaller"> (*) Of course the concept of <i>true</i> Object-Oriented programming language
+					can be discussed. But shh! This is not the point here. :-)</p></div>
+			</article>
+
+
+
+
+
+
+			<!-- Arrays and Hashes -->
+			<article class='smaller'>
+				<h3> Arrays and Hashes </h3>
+				<ul>
+					<li> Arrays indexed by an integer <span style="font-size: 15px;">(eficient)</span>
+					<li> Hashes indexed by an object <span style="font-size: 15px;">(flexible)</span>
+				</ul>
+
+				<code class="build">
+<pre>
+a = [ 1, 'cat', 3.14 ]   # array with three elements
+                         # you can also create arrays with:
+                         #   a = [] and a = Array.new
+
+a[0]                     # 1
+</pre>
+
+<pre>
+h = {                           # hashes are similar and use braces
+  'clarinet'  => 'woodwind',    # instead of square brackets
+  'drum'      => 'percussion',  # you can also create with:
+  'violin'    => 'string'       #   h = {} and h = Hash.new
+}
+h ['oboe']                      # "woodwind"
+</pre>
+				</code>
+			</article>
+
+
+			<article class="">
+				<h3>
+					Interactive Ruby Shell
+				</h3>
+				<p><code>irb</code> is run from the command line</p>
+				<p> The easiest way to test little chunks, or experimento with Ruby</p>
+				<ul>
+					<li> to exit the shell<br><code>exit, quit, irb_exit</code>
+					<li> to change the the debug level<br><code>conf.debug_level = N</code>
+				</ul>
+			</article>
+
+
+
+			<article>
+				<p> <img src='images/try_some.jpg' style='height: 400px; float:right; margin-top: -50px'> </p>
+				<h2>Demo time!</h2>
+			</article>
+
+
+			<article class="smaller">
+				<h3>
+					Interactive Ruby Shell - <span class="red">Restrictions</span>
+				</h3>
+				<p> There are differences between the Ruby interpreter and the Interactive Shell </p>
+				<ul>
+					<li> This will work on <code>irb: <br>eval "a = 0"<br>a<br><br>&gt; prog.rb:2: undefined local variable or method `a' <br>&gt; for #&gt;Object:0x401c2ce0&lt; (NameError)</code><br><br> <b>Use the <i>begin/end</i> pair to match the Ruby Interpreter behavior</b>
+				</ul>
+				<ul>
+					<li> <b>rtags, xmp, and the Frame Class</b> also have some differences
+				</ul>
+				<br><br>
+				<p> <a href=http://www.ruby-doc.org/docs/ProgrammingRuby/html/irb.html>www.ruby-doc.org/docs/ProgrammingRuby/html/irb.html</a> </p>
+			</article>
+
+
+
+			<!-- Conditions -->
+			<article class='smaller'>
+				<h3>
+					Control Structures
+				</h3>
+				<code>
+<pre>
+if count > 10
+  puts "Try again"
+elsif tries == 3
+  puts "You lose"
+else
+  puts "Enter a number"
+end
+
+while square &lt; 1000
+   square = square*square
+end
+</pre> </code>
+				<div class="build">
+				<p> You can also use the Ruby <i>Statement Modifiers</i>
+<code><pre>
+puts "Danger, Will Robinson" if radiation &lt; 3000
+puts "ALIENS!" while channel == 'history_channel'
+</pre></code>
+
+				<p> Ruby also has the <code>case</code>, <code>for</code> and <code>goto</code> statements,
+					they are less used as there are other ruby constructions we use to iterate, like the
+					<code>each</code> method present in many classes.
+				</div>
+			</article>
+
+
+
+
+
+			<article>
+				<h3>
+					Iterators
+				</h3>
+				<p>
+					Some classes have the <code>.each()</code> method, that permits to iterate the elements
+					of the object. This is very usefull in collections, such arrays.
+				</p>
+<code><pre>
+[ 'cat', 'dog', 'horse' ].each do |animal|
+  print animal, " -- "
+end
+&gt; cat -- dog -- horse --
+
+5.times {  print "*" }
+&gt; *****
+
+3.upto(6) {|i|  print i }
+('a'..'e').each {|char| print char }
+</pre></code>
+			</article>
+
+
+
+
+
+			<article>
+				<h3>
+					Methods (used like functions)
+				</h3>
+				<p>  A method is defined using the keyword <code>def</code>. </pre>
+
+<code><pre>
+def myNewMethod(arg1, arg2, arg3)     # 3 arguments
+  # Code for the method would go here
+end
+
+def myOtherNewMethod                  # No arguments
+  # Code for the method would go here
+end
+
+def coolDude(arg1="Miles", arg2="Coltrane", arg3="Roach")
+  "#{arg1}, #{arg2}, #{arg3}."
+end
+</pre></code>
+			</article>
+
+
+
+
+
+			<article class="smaller">
+				<h3>So far, so good</h3>
+				<p> Right now you can: </p>
+				<ul>
+					<li> Program sequentially (just like plain good Pacal)
+					<li> Create arrays, functions, etc...
+					<li> Work with simple scripts
+				</ul>
+				<br>
+				<p>
+					<img class="centered" style='height: 300px;' src='images/missing_something.jpg'>
+				</p>
+			</article>
+				
+
+
+
+
+
+
+			<article>
+				<p>
+					Right, but you said that Ruby is a true Object-Oriented language. Where are the 
+					classes and everything?
+				</p>
+				<div class="build">
+					<h2>
+						A little bit of Object Orientation
+					</h2>
+				</div>
+			</article>
+
+
+
+
+
+			<article>
+				<h3> Encapsulation </h3>
+				<p> Separation between interface and implementation. 
+				
+				</p>
+				<p>
+					The idea is that you can create an interface (Public methods in a
+					class) and, as long as that interface remains consistent, the application can
+					interact with your objects.
+				</p>
+				<br> <br>
+				<div class="build">
+					<p>
+					Example, the algorithm used to compute pi might be
+					proprietary. You can expose a simple API to the end user, but you hide all of the
+					logic
+					</p>
+				</div>
+			</article>
+
+
+
+
+
+
+			<article>
+				<h3> Polymorphism </h3>
+				<p> This is reflected in the capability to write one routine that can
+				operate on objects from more than one class.
+				</p>
+
+<code><pre>
+# creates a new song witn the music name only
+def new_song music_name
+end
+
+# creates a new song duplicating an
+# existing one
+def new_song song
+end
+</pre></code>
+			</article>
+
+
+
+
+			<article class='smaller'>
+				<h3> Inheritance </h3>
+				<p> Derive a new class from an existing one and acquire all the feature of the existing class.
+				</p>
+
+<code><pre>
+class figure
+  @number_of_sides
+  @name
+
+  def initialize
+    @number_of_sides = 0
+    @name = ''
+  end
+
+  def get_name
+  end
+end
+
+class square &lt; figure
+  def initialize
+    @number_of_sides = 4
+    @name = 'square'
+  end
+end
+</pre></code>
+			</article>
+
+
+
+
+			<article class="smaller">
+				<h3>
+					Classes
+				</h3>
+<code><pre>
+#!/usr/bin/ruby
+
+class Song
+  def initialize(name = 'untitled', artist = 'unamed', duration = 0)
+    @name     = name
+    @artist   = artist
+    @duration = duration
+  end
+
+  def to_s
+    "Song: #{@name}--#{@artist} (#{@duration})"
+  end
+end
+
+aSong = Song.new()
+puts aSong.to_s
+
+aSong = Song.new("My Way", "Sinatra", 225)
+puts aSong.to_s
+
+&gt; Song: untitled--unamed (0)
+&gt; Song: My Way--Sinatra (225)
+</pre></code>
+			</article>
+
+
+
+
+
+
+
+			<article>
+				<h3> Variables </h3>
+				<p> Ruby variable kinds can be very confusing... </p>
+				<br>
+				<code class="build"><pre>
+# Ruby variables
+
+$variable  # Global variables
+varible    # Local variables
+@variable  # Instance variables
+@@variable # Class variables </pre></code>
+
+				<div class="build">
+					<p> Piece of cake! </p>
+					<p> Or not so much... </p>
+				</div>
+
+			</article>
+
+
+
+
+
+			<article class="smaller">
+				<h3> Variables </h3>
+				<table class="noborder">
+					<tr>
+						<td> <code><pre>class ExampleClass
+        @variable = "foo"
+        @@variable = "bar"
+
+        def initialize
+                @variable = "baz"
+        end
+
+        def self.print
+                puts @variable
+        end
+
+        def print
+                self.class.print
+                puts @@variable
+                puts @variable
+        end
+end
+class ExampleSubclass &lt; ExampleClass
+        @variable = "1"
+        @@variable = "2"
+
+        def initialize
+                @variable = "3"
+        end
+end </pre></code>
+
+						<td> <code><pre>
+first_example = ExampleClass.new
+first_example.print
+
+puts "---"
+
+second_example = ExampleSubclass.new
+second_example.print</pre></code>
+					<p> Maybe with a little sample? </p>
+
+					<br>
+					<code class="build"><pre>$ ruby ./variables.rb
+foo
+2
+baz
+---
+1
+2
+3 </pre></code>
+				</table>
+			</article>
+
+
+
+			<article class="smaller">
+				<h3> Attribute Acessors </h3>
+				<p> Ruby has a built in facility to produce getters and setters for us. </p>
+				<p> The programmer must simply write <code>attr_accessor :var_name</code>,
+				it then creates at runtime the following code: </p>
+				<code><pre>
+attr_accessor :age
+
+def age=(value)
+  @age = value
+end
+
+def age
+  @age
+end </pre></code><br>
+				<p> You can also write <code>attr_reader</code> and <code>attr_writer</code>
+				to create attributes that can be only written or read-only </p>
+
+
+			</article>
+
+
+
+
+			<article>
+				<h2> Demo and Exercises </h2>
+			</article>
+
+
+
+
+
+			
+			<article>
+				<h2> Thank you! </h2>
+			</article>
+
+			<article>
+				<h3> References </h3>
+				
+				<ul>
+					<li> <a href='http://www.ruby-lang.org'>ruby-lang.org</a>
+				</ul>
+			</article>
+
+
+
+			<article>
+				<h3>
+					Exeptions
+				</h3>
+<code><pre>
+#! /usr/bin/ruby
+
+begin
+  fp = File.open("testfile")
+  # Exceptions raised by this code will
+  # be caught by the following rescue clause
+  fp.write(data) while data = fp.read(512)
+
+rescue SystemCallError => e
+  puts "#{e} -- #{e.errno.to_s}"
+end
+</pre></code>
+			</article>
+
+
+		</section>
+
+	</body>
+</html>
